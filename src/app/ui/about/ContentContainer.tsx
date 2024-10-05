@@ -11,12 +11,14 @@ interface Content {
   Icon: StaticImageData;
   DisplayText: string;
   MainText: string;
+  number: number;
 }
 
 export default function ContentContainer({
   Icon,
   DisplayText,
   MainText,
+  number,
 }: Content) {
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -29,6 +31,9 @@ export default function ContentContainer({
       whileInView={{ opacity: 1 }}
       animate={{ opacity: 1 }}
     >
+      <h1 className="text-white absolute inset-0 top-16 left-16">
+        / 0{number}
+      </h1>
       {!isHovered && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -41,6 +46,7 @@ export default function ContentContainer({
             alt="Mobile Content Box"
             className="min-w-[300px] p-4"
           />
+
           <div className="absolute inset-0 flex justify-evenly items-center flex-col">
             <Image
               src={Icon}

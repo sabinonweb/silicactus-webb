@@ -1,9 +1,9 @@
-import MegaPhone from "../app/assets/Megaphone.png";
+import MegaPhone from "@/app/assets/Megaphone.png";
 import GraphicPen from "@/app/assets/Graphic.png";
 import WebPage from "@/app/assets/WebPage.png";
-import ContentContainer from "@/app/ui/about/ContentContainer.tsx";
+import ContentContainer from "@/app/ui/about/ContentContainer";
 
-export default function AboutUs() {
+export default function Page() {
   return (
     <div className="flex flex-col md:flex-row flex-1 bg-[var(--primary-color)] items-center md:justify-evenly justify-center flex-wrap">
       <ContentContainer
@@ -18,6 +18,7 @@ export default function AboutUs() {
                 the heart of every successful brand. Our talented team of
                 designers is dedicated to creating visually stunning and
                 impactful designs that resonate with your target audience."
+        number={1}
       />
 
       <ContentContainer
@@ -32,6 +33,7 @@ export default function AboutUs() {
                 the heart of every successful brand. Our talented team of
                 designers is dedicated to creating visually stunning and
                 impactful designs that resonate with your target audience."
+        number={2}
       />
 
       <ContentContainer
@@ -46,6 +48,7 @@ export default function AboutUs() {
                 the heart of every successful brand. Our talented team of
                 designers is dedicated to creating visually stunning and
                 impactful designs that resonate with your target audience."
+        number={3}
       />
     </div>
   );

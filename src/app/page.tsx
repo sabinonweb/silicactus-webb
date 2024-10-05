@@ -18,6 +18,7 @@ export default function AboutUs() {
                 the heart of every successful brand. Our talented team of
                 designers is dedicated to creating visually stunning and
                 impactful designs that resonate with your target audience."
+        number={1}
       />
 
       <ContentContainer
@@ -32,6 +33,7 @@ export default function AboutUs() {
                 the heart of every successful brand. Our talented team of
                 designers is dedicated to creating visually stunning and
                 impactful designs that resonate with your target audience."
+        number={2}
       />
 
       <ContentContainer
@@ -46,6 +48,7 @@ export default function AboutUs() {
                 the heart of every successful brand. Our talented team of
                 designers is dedicated to creating visually stunning and
                 impactful designs that resonate with your target audience."
+        number={3}
       />
     </div>
   );
