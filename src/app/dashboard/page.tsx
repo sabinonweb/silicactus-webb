@@ -6,8 +6,9 @@ import Link from "next/link";
 import { Icons } from "../lib/data";
 import * as motion from "framer-motion/client";
 import { useRef, useState } from "react";
-import { useScroll } from "framer-motion";
+import { animate, AnimatePresence, useScroll } from "framer-motion";
 import NavigationOverlay from "./NavigationOverlay";
+import { transform } from "next/dist/build/swc";
 
 export default function Home() {
   const paragraph = useRef(null);
@@ -16,16 +17,34 @@ export default function Home() {
     offset: ["start 0.25", "start 0.5"],
   });
   const [isOpen, setIsOpen] = useState(false);
+  const navigationVariants = {
+    initial: { scaleY: 0 },
+    animate: {
+      scaleY: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    exit: { scaleY: 0 },
+  };
 
   return (
     <div className="flex relative h-full">
-      {isOpen ? (
-        <motion.div className="flex fixed z-20 lg:h-full rounded-lg items-center p-8 inset-0 w-full bg-[#14141b]/95">
-          <NavigationOverlay setIsOpen={setIsOpen} />
-        </motion.div>
-      ) : (
-        "null"
-      )}
+      <AnimatePresence>
+        {isOpen ? (
+          <motion.div
+            className="flex fixed z-20 lg:h-full rounded-lg items-center p-8 inset-0 w-full bg-[#14141b]/95 origin-top"
+            variants={navigationVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            <NavigationOverlay setIsOpen={setIsOpen} />
+          </motion.div>
+        ) : (
+          "null"
+        )}
+      </AnimatePresence>
       <div className="flex flex-col overflow-hidden justify-between flex-1 relative h-full bg-cover bg-center z-10 ">
         <div></div>
 
