@@ -1,14 +1,22 @@
 import "./globals.css";
-import { Poppins, Roboto } from "next/font/google";
+import { Poppins, Roboto, Playfair_Display } from "next/font/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: "400",
+  variable: "--font-poppins",
 });
 
 const roboto = Roboto({
   subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-roboto",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
   weight: "400",
+  variable: "--font-playfair-display",
 });
 
 export default function RootLayout({
@@ -19,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased bg-gradient-to-r from-white to-[#fcf3d5]`}
+        className={`${poppins.variable} ${playfair.variable} antialiased bg-[#050301]`}
       >
         {children}
       </body>
