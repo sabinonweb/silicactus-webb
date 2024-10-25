@@ -1,0 +1,13 @@
+.mask {
+  cursor: default;
+  mask-image: url("../assets/Mask.svg");
+  background: #ec4e39;
+  mask-repeat: no-repeat;
+  color: black;
+  z-index: 10;
+}
+
+body,
+.mask {
+  height: 100%;
+}
