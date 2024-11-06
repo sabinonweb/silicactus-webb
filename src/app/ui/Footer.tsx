@@ -1,12 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { navItems, socialLinks } from "../lib/navItems";
 import { Icons } from "../lib/data";
 import * as motion from "framer-motion/client";
+import { useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 export default function Footer() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "start 0.3"],
+  });
+  console.log("usescsdajkc ", scrollYProgress);
+  const opacity = useTransform(scrollYProgress, [0, 2], [0, 1]);
+  console.log("opacity sajndaksdnkca", opacity);
+
   return (
-    <div className="flex flex-col items-center p-4 flex-wrap">
-      <motion.div className="text-white font-playfair_display lg:text-[16rem] md:text-[12rem] sm:text-[8rem] text-8xl p-4">
+    <div className="flex flex-col items-center p-4 flex-wrap gap-y-4 ">
+      <motion.div
+        ref={ref}
+        className="text-white font-playfair_display lg:text-[16rem] md:text-[12rem] sm:text-[8rem] text-8xl p-4 bg-[#1c1c26] rounded-lg"
+        style={{ opacity }}
+      >
         silicactus
       </motion.div>
       <div className="flex gap-8 lg:flex-row flex-col">
