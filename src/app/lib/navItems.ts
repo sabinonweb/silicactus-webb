@@ -2,21 +2,39 @@ export const navItems = [
   {
     id: "home",
     title: "Home",
-    href: "/dashboard",
+    href: "/",
   },
   {
     id: "about_us",
     title: "About Us",
-    href: "/dashboard/about",
+    href: "/about",
   },
   {
     id: "services",
     title: "Services",
-    href: "/dashboard/services",
+    href: "/services",
   },
   {
     id: "contact_us",
     title: "Contact Us",
-    href: "/dashboard/contact",
+    href: "/contact",
+  },
+];
+
+export const socialLinks = [
+  {
+    id: "facebook",
+    title: "Facebook",
+    href: "https://www.facebook.com/silicactus",
+  },
+  {
+    id: "instagram",
+    title: "Instagram",
+    href: "https://www.instagram.com/silicactus/",
+  },
+  {
+    id: "linkedin",
+    title: "LinkedIn",
+    href: "https://www.linkedin.com/company/silicactus/posts/?feedView=all",
   },
 ];

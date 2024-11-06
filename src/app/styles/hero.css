@@ -1,7 +1,7 @@
 .mask {
   cursor: default;
   mask-image: url("../assets/Mask.svg");
-  background: #ec4e39;
+  background: #adbbc6;
   mask-repeat: no-repeat;
   color: black;
   z-index: 10;

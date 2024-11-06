@@ -10,7 +10,7 @@ export default function NavigationOverlay({ setIsOpen }) {
       <div className="flex items-center justify-between">
         <div></div>
         <motion.button
-          className={`bg-black shadow-2xl border border-[#14141b] p-4 rounded-lg z-30`}
+          className={`bg-black shadow-2xl border border-[#14141b] p-4 rounded-lg z-50`}
           whileTap={{ rotate: "180deg" }}
           whileHover={{ rotate: "180deg" }}
           onClick={() => {
@@ -30,13 +30,18 @@ export default function NavigationOverlay({ setIsOpen }) {
             href={data.href}
             key={data.id}
             className="text-white hover:border-b hover:border-b-gray-500 active:border-b active:border-b-gray-500 hover:text-gray-500 p-4"
+            onClick={() => setIsOpen((isOpen) => !isOpen)}
           >
             {data.title}
           </Link>
         ))}
       </div>
       <div>
-        <Link href="/privacy-policy" className="text-white text-2xl">
+        <Link
+          href="/privacy-policy"
+          className="text-white text-2xl"
+          onClick={() => setIsOpen((isOpen) => !isOpen)}
+        >
           Privacy Policy
         </Link>
       </div>
