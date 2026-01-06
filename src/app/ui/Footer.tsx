@@ -6,8 +6,10 @@ import { Icons } from "../lib/data";
 import * as motion from "framer-motion/client";
 import { useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -29,7 +31,13 @@ export default function Footer() {
       <div className="flex gap-8 lg:flex-row flex-col">
         <div className="bg-[#1c1c26] flex flex-col p-8 text-4xl rounded-lg lg:w-80">
           {navItems.map((data, index) => (
-            <Link key={index} className="text-white p-2" href={data.href}>
+            <Link
+              key={index}
+              className={`text-white p-2 ${
+                pathname === data.href ? "border-b-2 border-b-gray-500" : ""
+              }`}
+              href={data.href}
+            >
               {data.title}
             </Link>
           ))}
