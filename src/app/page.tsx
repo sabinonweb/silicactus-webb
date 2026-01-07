@@ -105,7 +105,7 @@ export default function Home() {
           </p>
           <div className="flex text-white flex-[0.3] justify-evenly items-center">
             <span>
-              <h1 className="text-3xl">7</h1>
+              <h1 className="text-3xl">4</h1>
               <h1>Team</h1>
             </span>
             <span>
@@ -113,7 +113,7 @@ export default function Home() {
               <h1>Founded</h1>
             </span>
             <span>
-              <h1 className="text-3xl">1</h1>
+              <h1 className="text-3xl">2</h1>
               <h1>Client</h1>
             </span>
           </div>

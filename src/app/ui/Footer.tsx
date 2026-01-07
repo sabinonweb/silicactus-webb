@@ -53,7 +53,7 @@ export default function Footer() {
             <Icons.PiSunThin color="white" size={30} />
             <h1 className="text-white text-xl">+977 9810643801</h1>
           </div>
-          <div className="flex bg-[#1c1c26] flex-1 flex-col rounded-lg">
+          {/* <div className="flex bg-[#1c1c26] flex-1 flex-col rounded-lg">
             <div className="flex gap-4 items-center p-4">
               <h1 className="text-xl">Privacy Policy</h1>
               <Icons.VscChevronRight size={24} />
@@ -62,7 +62,7 @@ export default function Footer() {
               <h1 className="text-xl">Imprint</h1>
               <Icons.VscChevronRight size={24} />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="bg-[#1c1c26] flex flex-col p-8 rounded-lg lg:w-80 gap-y-8">

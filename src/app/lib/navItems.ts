@@ -4,11 +4,7 @@ export const navItems = [
     title: "Home",
     href: "/",
   },
-  // {
-  //   id: "about_us",
-  //   title: "About Us",
-  //   href: "/about",
-  // },
+
   {
     id: "services",
     title: "Services",
@@ -18,6 +14,11 @@ export const navItems = [
     id: "contact_us",
     title: "Contact Us",
     href: "/contact",
+  },
+  {
+    id: "team",
+    title: "Our Team",
+    href: "/team",
   },
 ];
 

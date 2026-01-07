@@ -36,15 +36,15 @@ export default function NavigationOverlay({ setIsOpen }) {
           </Link>
         ))}
       </div>
-      <div>
+      {/* <div>
         <Link
-          href="/privacy-policy"
+          href="/policy"
           className="text-white text-2xl"
           onClick={() => setIsOpen((isOpen) => !isOpen)}
         >
           Privacy Policy
         </Link>
-      </div>
+      </div> */}
       <div></div>
     </div>
   );
