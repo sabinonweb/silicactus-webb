@@ -5,6 +5,12 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
 
+    // Find the project description field dynamically
+    const projectKey = Object.keys(data).find((key) =>
+      key.toLowerCase().includes("project")
+    );
+    const projectDescription = projectKey ? data[projectKey] : "N/A";
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -16,16 +22,16 @@ export async function POST(req: Request) {
     await transporter.sendMail({
       from: "business.silicactus@gmail.com",
       to: "business.silicactus@gmail.com",
-      replyTo: data["Your Email"],
+      replyTo: data["Your Email"] || undefined,
       subject: `New Contact Form Submission`,
       html: `
         <h2>New Contact Request</h2>
-        <p><b>Name:</b> ${data["Your Name"] || "N/A"}</p>
-        <p><b>Email:</b> ${data["Your Email"] || "N/A"}</p>
-        <p><b>Company:</b> ${data["Company name"] || "N/A"}</p>
-        <p><b>Services:</b> ${data.services?.join(", ")}</p>
-        <p><b>Budget:</b> ${data.budget}</p>
-        <p><b>Message:</b><br/>${data["Tell us about your project"]}</p>
+        <p><strong>Name:</strong> ${data["Your Name"] || "N/A"}</p>
+        <p><strong>Email:</strong> ${data["Your Email"] || "N/A"}</p>
+        <p><strong>Company:</strong> ${data["Company name"] || "N/A"}</p>
+        <p><strong>Services:</strong> ${data.services?.join(", ") || "N/A"}</p>
+        <p><strong>Budget:</strong> ${data.budget || "N/A"}</p>
+        <p><strong>About the project:</strong> ${projectDescription}</p>
       `,
     });
 

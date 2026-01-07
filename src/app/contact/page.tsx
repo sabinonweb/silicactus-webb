@@ -3,16 +3,19 @@
 import Link from "next/link";
 import { Icons } from "../lib/data";
 import { socialLinks } from "../lib/navItems";
-import * as motion from "framer-motion/client";
-import { AnimatePresence } from "framer-motion";
 import { budget, form, services } from "../lib/contact";
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function ContactPage() {
   const [selectedBudget, setSelectedBudget] = useState<number>(-1);
   const [selectedServices, setSelectedServices] = useState<number[]>([]);
   const [formInputs, setFormInputs] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [notification, setNotification] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   function toggleService(index: number) {
     setSelectedServices((prev) =>
@@ -26,12 +29,22 @@ export default function ContactPage() {
 
   async function handleSendClick() {
     setIsSubmitting(true);
+    setNotification(null);
 
     try {
+      // Ensure the "About the project" field is captured correctly
+      const aboutProjectKey =
+        form.find((f) => f.toLowerCase().includes("project")) ||
+        "About the project";
+
+      const aboutProject =
+        formInputs[aboutProjectKey]?.trim() || "No details provided";
+
       const emailData = {
+        ...formInputs,
         services: selectedServices.map((i) => services[i]),
         budget: selectedBudget >= 0 ? budget[selectedBudget] : "Not specified",
-        ...formInputs,
+        [aboutProjectKey]: aboutProject, // dynamically use the correct key
       };
 
       const res = await fetch("/api/contact", {
@@ -43,34 +56,65 @@ export default function ContactPage() {
       const result = await res.json();
 
       if (result.success) {
-        alert("Email sent successfully!");
+        setNotification({
+          type: "success",
+          message: "Your message was sent successfully.",
+        });
         setSelectedServices([]);
         setSelectedBudget(-1);
         setFormInputs({});
       } else {
-        alert("Failed to send email. Please try again.");
+        setNotification({
+          type: "error",
+          message: "Failed to send the message. Please try again.",
+        });
       }
     } catch (err) {
-      alert("Something went wrong. Please try again.");
+      setNotification({
+        type: "error",
+        message: "Something went wrong. Please try again.",
+      });
     } finally {
       setIsSubmitting(false);
+      setTimeout(() => setNotification(null), 4000);
     }
   }
 
   return (
-    <div className="flex text-white flex-1 justify-between p-20 h-screen flex-col lg:flex-row gap-12">
+    <div className="flex flex-col lg:flex-row text-white flex-1 justify-between align-bottom p-8 lg:p-20 gap-8 min-h-screen">
+      {/* Left Sidebar */}
       <div className="lg:flex lg:flex-[0.5] hidden"></div>
 
-      <div className="flex flex-col justify-end gap-y-6 flex-[0.5] lg:fixed lg:py-20 h-auto lg:h-5/6 px-4 lg:px-0">
+      {/* Contact Info */}
+      <div className="flex flex-col gap-6 flex-[0.5] lg:fixed lg:py-20 h-auto lg:h-5/6 px-4 lg:px-0">
+        {/* Notification */}
+        <AnimatePresence>
+          {notification && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className={`w-full rounded-md p-3 text-sm sm:text-base text-white shadow-md ${
+                notification.type === "success" ? "bg-black" : "bg-black"
+              }`}
+            >
+              {notification.message}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Email Card */}
-        <div className="flex gap-3 bg-[#1c1c26] p-4 sm:p-5 lg:p-6 rounded-lg justify-between w-full">
+        <div className="flex gap-3 bg-[#1c1c26] p-4 sm:p-5 lg:p-6 rounded-lg justify-start w-full">
           <div>
             <h1 className="text-sm sm:text-base lg:text-base">Email</h1>
             <h1 className="text-lg sm:text-2xl lg:text-3xl break-all">
               business.silicactus@gmail.com
             </h1>
           </div>
-          <motion.div whileHover={{ rotate: 45 }} className="flex items-center">
+          <motion.div
+            whileHover={{ rotate: 45 }}
+            className="flex items-center ml-auto"
+          >
             <Icons.PiSunThin
               size={22}
               className="sm:size-[26px] lg:size-[30px]"
@@ -79,12 +123,15 @@ export default function ContactPage() {
         </div>
 
         {/* Phone Card */}
-        <div className="flex gap-3 bg-[#1c1c26] p-4 sm:p-5 lg:p-6 rounded-lg justify-between w-full">
+        <div className="flex gap-3 bg-[#1c1c26] p-4 sm:p-5 lg:p-6 rounded-lg justify-start w-full">
           <div>
             <h1 className="text-sm sm:text-base lg:text-base">Phone Number</h1>
             <h1 className="text-lg sm:text-2xl lg:text-3xl">+977 9810643801</h1>
           </div>
-          <motion.div whileHover={{ rotate: 45 }} className="flex items-center">
+          <motion.div
+            whileHover={{ rotate: 45 }}
+            className="flex items-center ml-auto"
+          >
             <Icons.PiSunThin
               size={22}
               className="sm:size-[26px] lg:size-[30px]"
@@ -109,12 +156,14 @@ export default function ContactPage() {
         </div>
       </div>
 
+      {/* Main Form */}
       <div className="flex flex-col gap-y-8 flex-[0.5]">
-        <div className="text-9xl">
+        <div className="text-5xl sm:text-6xl lg:text-9xl font-bold leading-tight">
           <h1>Let's start</h1>
           <h1>the ideation</h1>
         </div>
 
+        {/* Services */}
         <div className="flex flex-wrap gap-4">
           <AnimatePresence>
             {services.map((item, i) => (
@@ -135,6 +184,7 @@ export default function ContactPage() {
           </AnimatePresence>
         </div>
 
+        {/* Input Fields */}
         <div className="flex flex-col gap-y-8">
           {form.map((placeholder, i) => (
             <input
@@ -147,6 +197,7 @@ export default function ContactPage() {
           ))}
         </div>
 
+        {/* Budget */}
         <div className="flex flex-wrap gap-4">
           {budget.map((item, i) => (
             <motion.button
@@ -161,12 +212,13 @@ export default function ContactPage() {
           ))}
         </div>
 
+        {/* Send Button */}
         <button
           onClick={handleSendClick}
           disabled={isSubmitting}
-          className="border p-5 rounded-full flex items-center gap-4 hover:bg-[#8a81ee] w-40"
+          className="border p-3 sm:p-4 rounded-full flex items-center gap-3 hover:bg-[#8a81ee] w-fit transition-all"
         >
-          <h1 className="text-2xl">
+          <h1 className="text-xl sm:text-2xl">
             {isSubmitting ? "Sending..." : "Send it!"}
           </h1>
           <Icons.VscChevronRight />
